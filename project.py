@@ -1,4 +1,3 @@
-# Download the helper library from https://www.twilio.com/docs/python/install
 import os
 from twilio.rest import Client
 from flask import Flask, request, redirect
@@ -6,19 +5,17 @@ from twilio.twiml.messaging_response import MessagingResponse
 
 app = Flask(__name__)
 
-# Set environment variables for your credentials
-# Read more at http://twil.io/secure
 account_sid = os.environ["TWILIO_ACCOUNT_SID"]
 auth_token = os.environ["TWILIO_AUTH_TOKEN"]
 client = Client(account_sid, auth_token)
 
-message = client.messages.create(
-  body="Welcome to fake Duolingo\nTo get started, text back '1', to cancel text '0'",
-  from_="+18887099768",
-  to="+17819213699"
-)
+# message = client.messages.create(
+#   body="Welcome to fake Duolingo\nTo get started, text back '1', to cancel text '0'",
+#   from_="+18887099768",
+#   to="+17819213699"
+# )
 
-print(message.sid)
+# print(message.sid)
 
 @app.route("/sms", methods=['GET', 'POST'])
 def sms_reply():
@@ -32,4 +29,5 @@ def sms_reply():
     return str(resp)
 
 if __name__ == "__main__":
+    app.run(port=5002)
     app.run(debug=True)
